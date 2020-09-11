@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Игра</title>
+	<style>
+		.main {
+			text-align: center;
+			border: 4px solid green;
+			background-color: lightblue;
+		}
+		.butt {
+			border: 4px solid black;
+			background-color: gray;
+			margin: 20px;
+			font-size: 20px;
+		}
+	</style>
+</head>
+<body style="background-color: lightblue;">
+	<div class="main" id="main">
+		<h1>BeeGame</h1>
+		<p class="butt" id="button">Одиночная игра</p>
+		<p class="butt" id="nx">Назад</p>
+		<img id="i2" src="f28a29e74f71cc9.png" width="50" height="50"/>
+		<img id="i1" src="ctive.png" width="50" height="50"/>
+		<p class="butt" id="bo">Далее</p>
+	</div>
+	<div id="gamemain">
+		<p id="game">Вы задели пчелу!</p>
+		<p id="gamenext">Породолжить</p>
+		<img id="ple" src="ctive.png" style="height: 40px; width: 40px;">
+		<img id="ple1" src="f28a29e74f71cc9.png" style="height: 40px; width: 40px;">
+	</div>
+
+	<script src="https://code.jquery.com/jquery-2.1.0.js">
+ 	</script>
+ 	<script>
+ 		$("#main").show();
+ 		$("#gamemain").hide();
+ 		$("#i2").hide();
+		$("#bo").click(function() {
+			$("#i2").show();
+			ple = 1;
+			$("#i1").hide();
+		});
+		$("#nx").click(function() {
+			$("#i1").show();
+			ple = 0;
+			$("#i2").hide();
+		});
+
+		$("#button").click(function() {
+			$("#gamemain").show();
+			$("#main").hide();
+			$("#game").hide();
+			$("#gamenext").hide();
+			if(ple == 0) {
+				$("#ple").show();
+				$("#ple1").hide();
+			}
+			else {
+				$("#ple1").show();
+				$("#ple").hide();
+			}
+			time = 1;
+			gameLoopIn = setInterval(gameLoop1, 0);
+		});
+
+ 		var width = document.documentElement.clientWidth;
+ 		var height = document.documentElement.clientHeight;
+ 		$("#game").hide();
+ 		$("#gamenext").hide();
+ 		$("#ple").offset({ top: height - 100 });
+ 		$("#ple1").offset({ top: height - 100 });
+ 		$("html").mousemove(function (event) {
+ 			if (width - 50 >= event.pageX) {
+			$("#ple").offset({ left: event.pageX });
+			$("#ple1").offset({ left: event.pageX });
+			x = event.pageX;
+		}
+		});
+ 		var time = 1;
+ 		var ple = 0;
+ 		var gamepiz = {}
+ 		var x = 0;
+ 		var gameplea = height / 45;
+ 		var gameLoopIn = 0;
+ 		
+ 		for (var i = 1;i<=gameplea; i++) {
+ 			$("#gamemain").append('<img src="bee.png" style="height: 40px; width: 40px;" id="g' + i +'">');
+ 			gamepiz["g" + i] = [];
+ 			gamepiz["g" + i][0] = Math.floor(Math.random() * height);
+ 			}
+
+		setInterval(function () {
+			for(var i = 1;i <= gameplea;i++){
+			if (gamepiz["g" + i][1] <= x+15 && gamepiz["g" + i][1] >= x-15 && gamepiz["g" + i][0] >= height - 100 && gamepiz["g" + i][0] <= height) {
+				$("#game").show();
+				$("#gamenext").show();
+				time = 0;
+				clearInterval(gameLoopIn);
+			}
+		}
+		},0);
+
+		for(var i = 1;i <= gameplea;i++){
+			var mach = Math.floor(Math.random() * width - 50);
+			$("#g" + i).offset({ left: mach });
+			gamepiz["g" + i][1] = mach;
+		}
+
+
+		setInterval(function () {
+			if (time < 50) {
+			time = time + 1;
+		}
+		} , 6000);
+
+		var gameLoop1 = function() {
+		for(var i = 1;i <= gameplea;i++){
+			$("#g" + i).offset({ top: gamepiz["g" + i][0] });
+			gamepiz["g" + i][0] = gamepiz["g" + i][0] + time;
+			if (gamepiz["g" + i][0] > height - 30) {
+				gamepiz["g" + i][0] = 0;
+				var mach = Math.floor(Math.random() * width - 50);
+				$("#g" + i).offset({ left: mach });
+				gamepiz["g" + i][1] = mach;
+			}
+
+		}
+		}
+
+		$("#game").click(function () {
+			$("#main").show();
+			$("#gamemain").hide();
+		});
+		$("#gamenext").click(function () {
+			time = 1;
+			gameLoopIn = setInterval(gameLoop1, 0);
+			$("#game").hide();
+			$("#gamenext").hide();
+		});
+
+ 	</script>
+ </body>
+</html>
