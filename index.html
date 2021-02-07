@@ -78,11 +78,13 @@
 		<img id="ple1" src="f28a29e74f71cc9.png">
 	</div>
 
-	<script src="https://code.jquery.com/jquery-2.1.0.js">
- 	</script>
+	<script src="https://code.jquery.com/jquery-2.1.0.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/mobile-detect/1.4.4/mobile-detect.min.js"></script>
  	<script>
  		var width = document.documentElement.clientWidth;
  		var height = document.documentElement.clientHeight;
+
+ 		var pcos = new MobileDetect(window.navigator.userAgent)
 
  		$("#main").show();
  		$("#gamemain").hide();
@@ -133,9 +135,14 @@
  		var x = 0;
  		var gameplea = height / 95;
  		var gameLoopIn = 0;
+
+ 		var xitbox = 40;
+ 		if(pcos.mobile() != null) {
+			xitbox = 85;
+ 		}
  		
  		for (var i = 1;i<=gameplea; i++) {
- 			$("#gamemain").append('<img src="bee.png" class="bee" id="g' + i +'">');
+ 			$("#gamemain").append('<img src="https://s655sas.storage.yandex.net/rdisk/6c803ecfe23bcceeee4f09a3da9671c46d899388875a8df730757d0b78269c7f/5f5608dd/ZF5788Dm_ELt-im1yVjGeS-SSoFs9NO5WUhrBnhLiyKPzvDRjCcROpfFwi3RZ05sPgi3FlC-R00DRz13AteqgQ==?uid=1101472671&filename=bee.png&disposition=inline&hash=&limit=0&content_type=image%2Fpng&tknv=v2&owner_uid=1101472671&fsize=2128&hid=8cce58af46254ff5032871c912411bc3&etag=037e48a3f689ed404280be1ad2893577&media_type=image&rtoken=BsGcRnMhfXTx&force_default=yes&ycrid=na-4125a952e92ef73e26cd5b0e2768bea1-downloader7f&ts=5aeb688be3140&s=b54ea61eb6e3095f05e6f38da82d7edb7bc8151ecc324f969bb037c08529f7da&pb=U2FsdGVkX19LenyFFeDiiJheokMXFyUjnO_e-IjBSyzHhz36rN4sUZzRkZBpph9e6Y6tEf3I5FYkcSP-6y37CQIcuXuAO70BcY-nawKz0sE" class="bee" id="g' + i +'">');
  			gamepiz["g" + i] = [];
  			gamepiz["g" + i][0] = Math.floor(Math.random() * height);
  			}
@@ -146,7 +153,7 @@
  		height = document.documentElement.clientHeight;
 		
 			for(var i = 1;i <= gameplea;i++){
-			if (gamepiz["g" + i][1] <= x+40 && gamepiz["g" + i][1] >= x-40 && gamepiz["g" + i][0] >= height - 100 && gamepiz["g" + i][0] <= height) {
+			if (gamepiz["g" + i][1] <= x+xitbox && gamepiz["g" + i][1] >= x-xitbox && gamepiz["g" + i][0] >= height - xitbox && gamepiz["g" + i][0] <= height) {
 				$("#game").show();
 				$("#gamenext").show();
 				time = 0;
